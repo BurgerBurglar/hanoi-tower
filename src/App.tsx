@@ -12,6 +12,8 @@ function App() {
   const [numCoins, setNumCoins] = useState<NumberCoins>(3);
   const coins = Array.from({ length: numCoins }, (_, i) => i + 1);
 
+  const [steps, setSteps] = useState(0);
+
   const initialCoinStacks = useMemo<CoinStacks>(
     () =>
       new Map([
@@ -69,12 +71,17 @@ function App() {
       prev.get(stack)!.add(topCoin);
       return prev;
     });
+    setSteps((prev) => prev + 1);
     setActiveStack(0);
   }
 
   return (
     <div className="max-w-[50rem] mx-auto px-4 py-2">
-      <h1 className="text-3xl text-center">河内塔</h1>
+      <h1 className="text-3xl text-center my-6">河内塔</h1>
+      <div className="flex gap-2 max-w-[4em] mx-auto justify-between">
+        <div className="">步数</div>
+        <div className="">{steps}</div>
+      </div>
       <div className="flex justify-around mt-10 mx-auto">
         <button
           className="hover:bg-slate-50 active:bg-slate-100 flex flex-col items-center justify-end h-[180px] relative w-[100px]"
