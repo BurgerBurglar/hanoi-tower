@@ -1,7 +1,15 @@
 import { useEffect, useState } from "react";
-import Coin from "./components/Coin";
 import Confetti from "react-confetti";
+import Coin from "./components/Coin";
 import useWindowSize from "./hooks/useWindowSize";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "./components/ui/dialog";
 
 type StackNumber = 1 | 2 | 3;
 type NumberCoins = 3 | 4 | 5 | 6 | 7;
@@ -146,7 +154,21 @@ function App() {
           </button>
         </div>
       </div>
-      {isGameOver() && <Confetti width={width} height={height} />}
+      {isGameOver() && (
+        <>
+          <Dialog defaultOpen>
+            <DialogContent className="w-[25em]">
+              <DialogHeader>
+                <DialogTitle className="text-center">你赢啦！</DialogTitle>
+                <DialogDescription className="text-center">
+                  在 {numCoins} 个硬币的河内塔游戏中，你总共使用了 {steps} 步。
+                </DialogDescription>
+              </DialogHeader>
+            </DialogContent>
+          </Dialog>
+          <Confetti className="z-[60]" width={width} height={height} />
+        </>
+      )}
       <pre>{JSON.stringify(activeStack)}</pre>
       <pre>{JSON.stringify([...coinStacks.get(1)!])}</pre>
       <pre>{JSON.stringify([...coinStacks.get(2)!])}</pre>
