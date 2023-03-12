@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import Coin from "./components/Coin";
 
 type StackNumber = 1 | 2 | 3;
@@ -11,19 +11,13 @@ const MAX_NUM_COINS = 7;
 function App() {
   const [numCoins, setNumCoins] = useState<NumberCoins>(3);
   const coins = Array.from({ length: numCoins }, (_, i) => i + 1);
+  const initialCoinStacks: CoinStacks = new Map([
+    [1, new Set(coins)],
+    [2, new Set()],
+    [3, new Set()],
+  ]);
 
   const [steps, setSteps] = useState(0);
-
-  const initialCoinStacks = useMemo<CoinStacks>(
-    () =>
-      new Map([
-        [1, new Set(coins)],
-        [2, new Set()],
-        [3, new Set()],
-      ]),
-    [coins]
-  );
-
   const [activeStack, setActiveStack] = useState<StackNumber | 0>(0);
   const [coinStacks, setCoinStacks] = useState<CoinStacks>(initialCoinStacks);
 
