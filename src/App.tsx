@@ -22,6 +22,13 @@ function App() {
     return coin === Math.min(...coinStacks.get(activeStack)!);
   }
 
+  function canMoveCoin(stack: StackNumber) {
+    if (activeStack === 0) return false;
+    const activeCoin = Math.min(...coinStacks.get(activeStack)!);
+    const topCoin = Math.min(...coinStacks.get(stack)!);
+    return activeCoin < topCoin;
+  }
+
   function handleClick(stack: StackNumber) {
     if (activeStack === 0 && coinStacks.get(stack)!.size === 0) {
       return;
@@ -34,6 +41,7 @@ function App() {
       setActiveStack(0);
       return;
     }
+    if (!canMoveCoin(stack)) return;
     setCoinStacks((prev) => {
       const activeStackCoins = prev.get(activeStack)!;
       const topCoin = Math.min(...activeStackCoins);
