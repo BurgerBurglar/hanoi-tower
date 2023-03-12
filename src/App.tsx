@@ -1,15 +1,9 @@
 import { useEffect, useState } from "react";
 import Confetti from "react-confetti";
 import Coin from "./components/Coin";
+import GameOverDialog from "./components/GameOverDialog";
+import ResetDialog from "./components/ResetDialog";
 import useWindowSize from "./hooks/useWindowSize";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "./components/ui/dialog";
 
 type StackNumber = 1 | 2 | 3;
 type NumberCoins = 3 | 4 | 5 | 6 | 7;
@@ -83,6 +77,7 @@ function App() {
 
   function resetGame() {
     setCoinStacks(initialCoinStacks);
+    setSteps(0);
   }
 
   function isGameOver() {
@@ -174,26 +169,15 @@ function App() {
             </button>
           </div>
         </div>
-        <button
-          className="px-4 py-1 text-lg border border-pink-600 rounded-full text-pink-600"
-          onClick={resetGame}
-        >
-          重置
-        </button>
+        <ResetDialog resetGame={resetGame}>
+          <button className="px-4 py-1 text-lg border border-pink-600 rounded-full text-pink-600">
+            重置
+          </button>
+        </ResetDialog>
       </div>
       {isGameOver() && (
         <>
-          <Dialog defaultOpen>
-            <DialogContent className="w-[25em]">
-              <DialogHeader>
-                <DialogTitle className="text-center">你赢啦！</DialogTitle>
-                <DialogDescription className="text-center">
-                  在 {totalCoins} 个硬币的河内塔游戏中，你总共使用了 {steps}{" "}
-                  步。
-                </DialogDescription>
-              </DialogHeader>
-            </DialogContent>
-          </Dialog>
+          <GameOverDialog totalCoins={totalCoins} steps={steps} />
           <Confetti className="z-[60]" width={width} height={height} />
         </>
       )}
