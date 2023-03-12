@@ -1,17 +1,33 @@
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Coin from "./components/Coin";
 
 type StackNumber = 1 | 2 | 3;
+type NumberCoins = 3 | 4 | 5 | 6 | 7;
+type CoinStacks = Map<StackNumber, Set<number>>;
+
+const MIN_NUM_COINS = 3;
+const MAX_NUM_COINS = 7;
 
 function App() {
-  const [activeStack, setActiveStack] = useState<StackNumber | 0>(0);
-  const [coinStacks, setCoinStacks] = useState<Map<StackNumber, Set<number>>>(
-    new Map([
-      [1, new Set([1, 2, 3])],
-      [2, new Set()],
-      [3, new Set()],
-    ])
+  const [numCoins, setNumCoins] = useState<NumberCoins>(3);
+  const coins = Array.from({ length: numCoins }, (_, i) => i + 1);
+
+  const initialCoinStacks = useMemo<CoinStacks>(
+    () =>
+      new Map([
+        [1, new Set(coins)],
+        [2, new Set()],
+        [3, new Set()],
+      ]),
+    [coins]
   );
+
+  const [activeStack, setActiveStack] = useState<StackNumber | 0>(0);
+  const [coinStacks, setCoinStacks] = useState<CoinStacks>(initialCoinStacks);
+
+  useEffect(() => {
+    setCoinStacks(initialCoinStacks);
+  }, [numCoins]);
 
   function getTopCoin(stack: StackNumber) {
     return Math.min(...coinStacks.get(stack)!);
@@ -61,32 +77,61 @@ function App() {
       <h1 className="text-3xl text-center">河内塔</h1>
       <div className="flex justify-around mt-10 mx-auto">
         <button
-          className="hover:bg-slate-50 active:bg-slate-100 flex flex-col items-center justify-end h-[100px] relative w-[100px]"
+          className="hover:bg-slate-50 active:bg-slate-100 flex flex-col items-center justify-end h-[180px] relative w-[100px]"
           onClick={() => handleClick(1)}
         >
           <div className="w-[3px] h-full absolute left-[50%] -translate-x-[50%] bg-slate-900" />
-          {isCoinInStack(1, 1) && <Coin size={1} isTop={isCoinTop(1, 1)} />}
-          {isCoinInStack(2, 1) && <Coin size={2} isTop={isCoinTop(2, 1)} />}
-          {isCoinInStack(3, 1) && <Coin size={3} isTop={isCoinTop(3, 1)} />}
+          {coins.map(
+            (coin) =>
+              isCoinInStack(coin, 1) && (
+                <Coin key={coin} size={coin} isTop={isCoinTop(coin, 1)} />
+              )
+          )}
         </button>
         <button
-          className="hover:bg-slate-50 active:bg-slate-100 flex flex-col items-center justify-end h-[100px] relative w-[100px]"
+          className="hover:bg-slate-50 active:bg-slate-100 flex flex-col items-center justify-end h-[180px] relative w-[100px]"
           onClick={() => handleClick(2)}
         >
           <div className="w-[3px] h-full absolute left-[50%] -translate-x-[50%] bg-slate-900" />
-          {isCoinInStack(1, 2) && <Coin size={1} isTop={isCoinTop(1, 2)} />}
-          {isCoinInStack(2, 2) && <Coin size={2} isTop={isCoinTop(2, 2)} />}
-          {isCoinInStack(3, 2) && <Coin size={3} isTop={isCoinTop(3, 2)} />}
+          {coins.map(
+            (coin) =>
+              isCoinInStack(coin, 2) && (
+                <Coin key={coin} size={coin} isTop={isCoinTop(coin, 2)} />
+              )
+          )}
         </button>
         <button
-          className="hover:bg-slate-50 active:bg-slate-100 flex flex-col items-center justify-end h-[100px] relative w-[100px]"
+          className="hover:bg-slate-50 active:bg-slate-100 flex flex-col items-center justify-end h-[180px] relative w-[100px]"
           onClick={() => handleClick(3)}
         >
-          <div className="w-[3px] h-full absolute left-[50%] -translate-x-[50%] bg-slate-900" />{" "}
-          {isCoinInStack(1, 3) && <Coin size={1} isTop={isCoinTop(1, 3)} />}
-          {isCoinInStack(2, 3) && <Coin size={2} isTop={isCoinTop(2, 3)} />}
-          {isCoinInStack(3, 3) && <Coin size={3} isTop={isCoinTop(3, 3)} />}
+          <div className="w-[3px] h-full absolute left-[50%] -translate-x-[50%] bg-slate-900" />
+          {coins.map(
+            (coin) =>
+              isCoinInStack(coin, 3) && (
+                <Coin key={coin} size={coin} isTop={isCoinTop(coin, 3)} />
+              )
+          )}
         </button>
+      </div>
+      <div className="flex gap-4 mx-auto w-[12rem] justify-between items-center mt-6">
+        <div>硬币数量</div>
+        <div className="flex gap-2 items-center">
+          <button
+            className="border border-pink-400 rounded-full h-[2rem] grid aspect-square place-items-center disabled:border-slate-400 text-pink-400 disabled:text-slate-400"
+            disabled={numCoins === MIN_NUM_COINS}
+            onClick={() => setNumCoins((prev) => (prev - 1) as NumberCoins)}
+          >
+            -
+          </button>
+          <div className="">{numCoins}</div>
+          <button
+            className="border border-pink-400 rounded-full h-[2rem] grid aspect-square place-items-center disabled:border-slate-400 text-pink-400 disabled:text-slate-400"
+            disabled={numCoins === MAX_NUM_COINS}
+            onClick={() => setNumCoins((prev) => (prev + 1) as NumberCoins)}
+          >
+            +
+          </button>
+        </div>
       </div>
       <pre>{JSON.stringify(activeStack)}</pre>
       <pre>{JSON.stringify([...coinStacks.get(1)!])}</pre>
