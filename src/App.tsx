@@ -19,8 +19,8 @@ const MIN_NUM_COINS = 3;
 const MAX_NUM_COINS = 7;
 
 function App() {
-  const [numCoins, setNumCoins] = useState<NumberCoins>(3);
-  const coins = Array.from({ length: numCoins }, (_, i) => i + 1);
+  const [totalCoins, setTotalCoins] = useState<NumberCoins>(3);
+  const coins = Array.from({ length: totalCoins }, (_, i) => i + 1);
   const initialCoinStacks: CoinStacks = new Map([
     [1, new Set(coins)],
     [2, new Set()],
@@ -35,7 +35,7 @@ function App() {
 
   useEffect(() => {
     resetGame();
-  }, [numCoins]);
+  }, [totalCoins]);
 
   function getTopCoin(stack: StackNumber) {
     return Math.min(...coinStacks.get(stack)!);
@@ -109,7 +109,12 @@ function App() {
           {coins.map(
             (coin) =>
               isCoinInStack(coin, 1) && (
-                <Coin key={coin} size={coin} isTop={isCoinTop(coin, 1)} />
+                <Coin
+                  key={coin}
+                  number={coin}
+                  totalCoins={totalCoins}
+                  isTop={isCoinTop(coin, 1)}
+                />
               )
           )}
         </button>
@@ -121,7 +126,12 @@ function App() {
           {coins.map(
             (coin) =>
               isCoinInStack(coin, 2) && (
-                <Coin key={coin} size={coin} isTop={isCoinTop(coin, 2)} />
+                <Coin
+                  key={coin}
+                  number={coin}
+                  totalCoins={totalCoins}
+                  isTop={isCoinTop(coin, 2)}
+                />
               )
           )}
         </button>
@@ -133,7 +143,12 @@ function App() {
           {coins.map(
             (coin) =>
               isCoinInStack(coin, 3) && (
-                <Coin key={coin} size={coin} isTop={isCoinTop(coin, 3)} />
+                <Coin
+                  key={coin}
+                  number={coin}
+                  totalCoins={totalCoins}
+                  isTop={isCoinTop(coin, 3)}
+                />
               )
           )}
         </button>
@@ -144,16 +159,16 @@ function App() {
           <div className="flex gap-2 items-center">
             <button
               className="border border-pink-400 rounded-full h-[2rem] grid aspect-square place-items-center disabled:border-slate-400 text-pink-400 disabled:text-slate-400"
-              disabled={numCoins === MIN_NUM_COINS}
-              onClick={() => setNumCoins((prev) => (prev - 1) as NumberCoins)}
+              disabled={totalCoins === MIN_NUM_COINS}
+              onClick={() => setTotalCoins((prev) => (prev - 1) as NumberCoins)}
             >
               -
             </button>
-            <div className="">{numCoins}</div>
+            <div className="">{totalCoins}</div>
             <button
               className="border border-pink-400 rounded-full h-[2rem] grid aspect-square place-items-center disabled:border-slate-400 text-pink-400 disabled:text-slate-400"
-              disabled={numCoins === MAX_NUM_COINS}
-              onClick={() => setNumCoins((prev) => (prev + 1) as NumberCoins)}
+              disabled={totalCoins === MAX_NUM_COINS}
+              onClick={() => setTotalCoins((prev) => (prev + 1) as NumberCoins)}
             >
               +
             </button>
@@ -173,7 +188,8 @@ function App() {
               <DialogHeader>
                 <DialogTitle className="text-center">你赢啦！</DialogTitle>
                 <DialogDescription className="text-center">
-                  在 {numCoins} 个硬币的河内塔游戏中，你总共使用了 {steps} 步。
+                  在 {totalCoins} 个硬币的河内塔游戏中，你总共使用了 {steps}{" "}
+                  步。
                 </DialogDescription>
               </DialogHeader>
             </DialogContent>
