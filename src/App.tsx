@@ -34,7 +34,7 @@ function App() {
   const { width, height } = useWindowSize();
 
   useEffect(() => {
-    setCoinStacks(initialCoinStacks);
+    resetGame();
   }, [numCoins]);
 
   function getTopCoin(stack: StackNumber) {
@@ -79,6 +79,10 @@ function App() {
     });
     setSteps((prev) => prev + 1);
     setActiveStack(0);
+  }
+
+  function resetGame() {
+    setCoinStacks(initialCoinStacks);
   }
 
   function isGameOver() {
@@ -134,25 +138,33 @@ function App() {
           )}
         </button>
       </div>
-      <div className="flex gap-4 mx-auto w-[12rem] justify-between items-center mt-6">
-        <div>硬币数量</div>
-        <div className="flex gap-2 items-center">
-          <button
-            className="border border-pink-400 rounded-full h-[2rem] grid aspect-square place-items-center disabled:border-slate-400 text-pink-400 disabled:text-slate-400"
-            disabled={numCoins === MIN_NUM_COINS}
-            onClick={() => setNumCoins((prev) => (prev - 1) as NumberCoins)}
-          >
-            -
-          </button>
-          <div className="">{numCoins}</div>
-          <button
-            className="border border-pink-400 rounded-full h-[2rem] grid aspect-square place-items-center disabled:border-slate-400 text-pink-400 disabled:text-slate-400"
-            disabled={numCoins === MAX_NUM_COINS}
-            onClick={() => setNumCoins((prev) => (prev + 1) as NumberCoins)}
-          >
-            +
-          </button>
+      <div className="flex flex-col items-center gap-4">
+        <div className="flex gap-4 w-[12rem] justify-between items-center mt-6">
+          <div>硬币数量</div>
+          <div className="flex gap-2 items-center">
+            <button
+              className="border border-pink-400 rounded-full h-[2rem] grid aspect-square place-items-center disabled:border-slate-400 text-pink-400 disabled:text-slate-400"
+              disabled={numCoins === MIN_NUM_COINS}
+              onClick={() => setNumCoins((prev) => (prev - 1) as NumberCoins)}
+            >
+              -
+            </button>
+            <div className="">{numCoins}</div>
+            <button
+              className="border border-pink-400 rounded-full h-[2rem] grid aspect-square place-items-center disabled:border-slate-400 text-pink-400 disabled:text-slate-400"
+              disabled={numCoins === MAX_NUM_COINS}
+              onClick={() => setNumCoins((prev) => (prev + 1) as NumberCoins)}
+            >
+              +
+            </button>
+          </div>
         </div>
+        <button
+          className="px-4 py-1 text-lg border border-pink-600 rounded-full text-pink-600"
+          onClick={resetGame}
+        >
+          重置
+        </button>
       </div>
       {isGameOver() && (
         <>
