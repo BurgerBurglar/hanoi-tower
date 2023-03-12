@@ -69,6 +69,14 @@ function App() {
     setActiveStack(0);
   }
 
+  function isGameOver() {
+    if (coinStacks.get(1)!.size !== 0) return false;
+    if (coinStacks.get(2)!.size !== 0 && coinStacks.get(3)!.size !== 0) {
+      return false;
+    }
+    return true;
+  }
+
   return (
     <div className="max-w-[50rem] mx-auto px-4 py-2">
       <h1 className="text-3xl text-center my-6">河内塔</h1>
@@ -76,6 +84,7 @@ function App() {
         <div className="">步数</div>
         <div className="">{steps}</div>
       </div>
+      <div className="text-center">{isGameOver() && "你赢啦！"}</div>
       <div className="flex justify-around mt-10 mx-auto">
         <button
           className="hover:bg-slate-50 active:bg-slate-100 flex flex-col items-center justify-end h-[180px] relative w-[100px]"
