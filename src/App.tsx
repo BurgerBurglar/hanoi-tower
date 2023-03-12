@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import Coin from "./components/Coin";
+import Confetti from "react-confetti";
+import useWindowSize from "./hooks/useWindowSize";
 
 type StackNumber = 1 | 2 | 3;
 type NumberCoins = 3 | 4 | 5 | 6 | 7;
@@ -20,6 +22,8 @@ function App() {
   const [steps, setSteps] = useState(0);
   const [activeStack, setActiveStack] = useState<StackNumber | 0>(0);
   const [coinStacks, setCoinStacks] = useState<CoinStacks>(initialCoinStacks);
+
+  const { width, height } = useWindowSize();
 
   useEffect(() => {
     setCoinStacks(initialCoinStacks);
@@ -84,7 +88,6 @@ function App() {
         <div className="">步数</div>
         <div className="">{steps}</div>
       </div>
-      <div className="text-center">{isGameOver() && "你赢啦！"}</div>
       <div className="flex justify-around mt-10 mx-auto">
         <button
           className="hover:bg-slate-50 active:bg-slate-100 flex flex-col items-center justify-end h-[180px] relative w-[100px]"
@@ -143,6 +146,7 @@ function App() {
           </button>
         </div>
       </div>
+      {isGameOver() && <Confetti width={width} height={height} />}
       <pre>{JSON.stringify(activeStack)}</pre>
       <pre>{JSON.stringify([...coinStacks.get(1)!])}</pre>
       <pre>{JSON.stringify([...coinStacks.get(2)!])}</pre>
