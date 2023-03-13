@@ -184,10 +184,6 @@ function App() {
           />
         </>
       )}
-      <pre>{JSON.stringify(activeStack)}</pre>
-      <pre>{JSON.stringify([...coinStacks.get(1)!])}</pre>
-      <pre>{JSON.stringify([...coinStacks.get(2)!])}</pre>
-      <pre>{JSON.stringify([...coinStacks.get(3)!])}</pre>
     </div>
   );
 }
