@@ -37,6 +37,11 @@ function App() {
     targetTotalCoinsRef.current = totalCoins;
   }, [totalCoins]);
 
+  function isDisabled(stack: StackNumber) {
+    if (activeStack !== 0) return false;
+    return coinStacks.get(stack)!.size === 0;
+  }
+
   function getTopCoin(stack: StackNumber) {
     return Math.min(...coinStacks.get(stack)!);
   }
@@ -156,6 +161,7 @@ function App() {
       </div>
       <div className="flex justify-around mt-10 mx-auto">
         <button
+          disabled={isDisabled(1)}
           className="hover:bg-slate-50 active:bg-slate-100 flex flex-col items-center justify-end h-[180px] relative w-[100px]"
           onClick={() => handleClick(1)}
         >
@@ -173,7 +179,9 @@ function App() {
           )}
         </button>
         <button
-          className="hover:bg-slate-50 active:bg-slate-100 flex flex-col items-center justify-end h-[180px] relative w-[100px]"
+          disabled={isDisabled(2)}
+          className="flex flex-col items-center justify-end h-[180px] relative w-[100px]
+          enabled:hover:bg-slate-50 enabled:active:bg-slate-100"
           onClick={() => handleClick(2)}
         >
           <div className="w-[3px] h-full absolute left-[50%] -translate-x-[50%] bg-slate-900" />
@@ -190,7 +198,9 @@ function App() {
           )}
         </button>
         <button
-          className="hover:bg-slate-50 active:bg-slate-100 flex flex-col items-center justify-end h-[180px] relative w-[100px]"
+          disabled={isDisabled(3)}
+          className="flex flex-col items-center justify-end h-[180px] relative w-[100px]
+          enabled:hover:bg-slate-50 enabled:active:bg-slate-100"
           onClick={() => handleClick(3)}
         >
           <div className="w-[3px] h-full absolute left-[50%] -translate-x-[50%] bg-slate-900" />
