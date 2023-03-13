@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
-import Confetti from "react-confetti";
 import Coin from "./components/Coin";
 import GameOverDialog from "./components/GameOverDialog";
 import ResetDialog from "./components/ResetDialog";
-import useWindowSize from "./hooks/useWindowSize";
 
 type StackNumber = 1 | 2 | 3;
 type NumberCoins = 3 | 4 | 5 | 6 | 7;
@@ -25,8 +23,6 @@ function App() {
   const [steps, setSteps] = useState(0);
   const [activeStack, setActiveStack] = useState<StackNumber | 0>(0);
   const [coinStacks, setCoinStacks] = useState<CoinStacks>(initialCoinStacks);
-
-  const { width, height } = useWindowSize();
 
   useEffect(() => {
     resetGame();
@@ -186,7 +182,6 @@ function App() {
             steps={steps}
             score={getScore()}
           />
-          <Confetti className="z-[60]" width={width} height={height} />
         </>
       )}
       <pre>{JSON.stringify(activeStack)}</pre>

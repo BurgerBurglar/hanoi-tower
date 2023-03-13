@@ -1,4 +1,6 @@
 import clsx from "clsx";
+import Confetti from "react-confetti";
+import useWindowSize from "../hooks/useWindowSize";
 import {
   Dialog,
   DialogContent,
@@ -59,9 +61,12 @@ const getScoreInfo = (score: number) => {
 
 function GameOverDialog({ totalCoins, steps, score }: GameOverDialogProps) {
   const { textColor, bgColor, feedback } = getScoreInfo(score);
+  const { width, height } = useWindowSize();
+
   return (
     <Dialog defaultOpen>
       <DialogContent className="w-[25em]">
+        <Confetti className="z-[60]" width={width} height={height} />
         <DialogHeader>
           <DialogTitle className="text-center text-2xl text-pink-600">
             你赢啦！
