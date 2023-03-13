@@ -14,6 +14,7 @@ const MAX_NUM_COINS = 7;
 
 function App() {
   const [totalCoins, setTotalCoins] = useState<NumberCoins>(3);
+  const minSteps = 2 ** totalCoins - 1;
   const coins = Array.from({ length: totalCoins }, (_, i) => i + 1);
   const initialCoinStacks: CoinStacks = new Map([
     [1, new Set(coins)],
@@ -86,6 +87,13 @@ function App() {
       return false;
     }
     return true;
+  }
+
+  function getScore() {
+    if (!isGameOver()) return -1;
+    const timesMinSteps = steps / minSteps;
+    // if use minSteps, 100; 1.2*minSteps gets 90, 2* gets 69, infinite steps gets 60
+    return 40 * Math.exp((1 - timesMinSteps) * 1.5) + 60;
   }
 
   return (
@@ -173,7 +181,11 @@ function App() {
       </div>
       {isGameOver() && (
         <>
-          <GameOverDialog totalCoins={totalCoins} steps={steps} />
+          <GameOverDialog
+            totalCoins={totalCoins}
+            steps={steps}
+            score={getScore()}
+          />
           <Confetti className="z-[60]" width={width} height={height} />
         </>
       )}
