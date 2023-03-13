@@ -38,6 +38,7 @@ function App() {
   }, [totalCoins]);
 
   function isDisabled(stack: StackNumber) {
+    if (isGameOver()) return true;
     if (activeStack !== 0) return false;
     return coinStacks.get(stack)!.size === 0;
   }
