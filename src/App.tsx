@@ -3,6 +3,7 @@ import Coin from "./components/Coin";
 import GameOverDialog from "./components/GameOverDialog";
 import ResetDialog from "./components/ResetDialog";
 import { CoinStacks, NumberCoins, StackNumber } from "./types";
+import createAudio from "./utils/audio";
 
 const MIN_NUM_COINS = 3;
 const MAX_NUM_COINS = 7;
@@ -60,20 +61,40 @@ function App() {
     if (activeStack === 0 && coinStacks.get(stack)!.size === 0) {
       return;
     }
+    // lift coin
     if (activeStack === 0) {
       setActiveStack(stack);
+      const coinSize = getTopCoin(stack);
+      createAudio({
+        coinSize,
+      });
       return;
     }
+    // drop coin
     if (activeStack === stack) {
       setActiveStack(0);
+      const coinSize = getTopCoin(stack);
+      createAudio({
+        coinSize,
+      });
       return;
     }
-    if (!canMoveCoin(stack)) return;
+    // attemped bigger on smaller
+    if (!canMoveCoin(stack)) {
+      // play bad sound
+      createAudio({ coinSize: 100 });
+      return;
+    }
+
+    // move coin
     setCoinStacks((prev) => {
       const activeStackCoins = prev.get(activeStack)!;
-      const topCoin = getTopCoin(activeStack);
-      activeStackCoins.delete(topCoin);
-      prev.get(stack)!.add(topCoin);
+      const activeCoin = getTopCoin(activeStack);
+      activeStackCoins.delete(activeCoin);
+      prev.get(stack)!.add(activeCoin);
+      createAudio({
+        coinSize: activeCoin,
+      });
       return prev;
     });
     setSteps((prev) => prev + 1);
