@@ -7,7 +7,7 @@
 - ~Add reset function~
 - ~Add modal for accidental number of coins reset~
 - ~remove debug code~
-- Change head
+- ~Change head~
 - Change design
 - Add i18n support
 - Add SFX
