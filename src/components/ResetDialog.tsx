@@ -1,4 +1,4 @@
-import { PropsWithChildren, useState } from "react";
+import { Dispatch, ReactNode, SetStateAction } from "react";
 import {
   Dialog,
   DialogContent,
@@ -6,23 +6,24 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "./ui/dialog";
 
 interface ResetDialogProps {
+  trigger: ReactNode;
+  isOpen: boolean;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
   resetGame: () => void;
 }
 
 function ResetDialog({
+  trigger,
+  isOpen,
+  setIsOpen,
   resetGame,
-  children,
-}: PropsWithChildren<ResetDialogProps>) {
-  const [isOpen, setIsOpen] = useState(false);
+}: ResetDialogProps) {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger className="px-4 py-1 text-lg border border-pink-600 rounded-full text-pink-600">
-        {children}
-      </DialogTrigger>
+      {trigger}
       <DialogContent className="w-[25em]">
         <DialogHeader>
           <DialogTitle className="text-center">

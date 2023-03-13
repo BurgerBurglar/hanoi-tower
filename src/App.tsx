@@ -24,6 +24,8 @@ function App() {
   const [activeStack, setActiveStack] = useState<StackNumber | 0>(0);
   const [coinStacks, setCoinStacks] = useState<CoinStacks>(initialCoinStacks);
 
+  const [isResetModalOpen, setIsResetModalOpen] = useState(false);
+
   useEffect(() => {
     resetGame();
   }, [totalCoins]);
@@ -72,11 +74,6 @@ function App() {
     setActiveStack(0);
   }
 
-  function resetGame() {
-    setCoinStacks(initialCoinStacks);
-    setSteps(0);
-  }
-
   function isGameOver() {
     if (coinStacks.get(1)!.size !== 0) return false;
     if (coinStacks.get(2)!.size !== 0 && coinStacks.get(3)!.size !== 0) {
@@ -90,6 +87,19 @@ function App() {
     const timesMinSteps = steps / minSteps;
     // if use minSteps, 100; 1.2*minSteps gets 90, 2* gets 69, infinite steps gets 60
     return 40 * Math.exp((1 - timesMinSteps) * 1.5) + 60;
+  }
+
+  function handleResetModal() {
+    if (steps === 0 || isGameOver()) {
+      resetGame();
+      return;
+    }
+    setIsResetModalOpen(true);
+  }
+
+  function resetGame() {
+    setCoinStacks(initialCoinStacks);
+    setSteps(0);
   }
 
   return (
@@ -173,7 +183,19 @@ function App() {
             </button>
           </div>
         </div>
-        <ResetDialog resetGame={resetGame}>重置</ResetDialog>
+        <ResetDialog
+          trigger={
+            <button
+              className="px-4 py-1 text-lg border border-pink-600 rounded-full text-pink-600"
+              onClick={handleResetModal}
+            >
+              重置
+            </button>
+          }
+          isOpen={isResetModalOpen}
+          setIsOpen={setIsResetModalOpen}
+          resetGame={resetGame}
+        />
       </div>
       {isGameOver() && (
         <>
