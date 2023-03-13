@@ -123,7 +123,11 @@ function App() {
 
   return (
     <div className="max-w-[50rem] mx-auto px-4 py-2">
-      <h1 className="text-3xl text-center my-6">河内塔</h1>
+      <h1 className="flex items-end justify-center text-3xl my-6">
+        <img src="/favicon.ico" alt="icon" className="h-[1.5em]" />
+        河内塔
+        <img src="/favicon.ico" alt="icon" className="h-[1.5em]" />
+      </h1>
       <div className="flex gap-2 max-w-[4em] mx-auto justify-between">
         <div className="">步数</div>
         <div className="">{steps}</div>
@@ -182,7 +186,7 @@ function App() {
         </button>
       </div>
       <div className="flex flex-col items-center gap-4">
-        <div className="flex gap-4 w-[12rem] justify-between items-center mt-6">
+        <div className="flex flex-col gap-2 w-[12rem] justify-between items-center mt-6">
           <div>硬币数量</div>
           <div className="flex gap-2 items-center">
             <button

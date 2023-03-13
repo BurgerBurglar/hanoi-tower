@@ -8,6 +8,6 @@
 - ~Add modal for accidental number of coins reset~
 - ~remove debug code~
 - ~Change head~
-- Change design
+- ~Change design~
 - Add i18n support
 - Add SFX
