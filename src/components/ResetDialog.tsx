@@ -20,7 +20,9 @@ function ResetDialog({
   const [isOpen, setIsOpen] = useState(false);
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger>{children}</DialogTrigger>
+      <DialogTrigger className="px-4 py-1 text-lg border border-pink-600 rounded-full text-pink-600">
+        {children}
+      </DialogTrigger>
       <DialogContent className="w-[25em]">
         <DialogHeader>
           <DialogTitle className="text-center">

@@ -169,11 +169,7 @@ function App() {
             </button>
           </div>
         </div>
-        <ResetDialog resetGame={resetGame}>
-          <button className="px-4 py-1 text-lg border border-pink-600 rounded-full text-pink-600">
-            重置
-          </button>
-        </ResetDialog>
+        <ResetDialog resetGame={resetGame}>重置</ResetDialog>
       </div>
       {isGameOver() && (
         <>
