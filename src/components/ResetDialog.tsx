@@ -1,4 +1,5 @@
-import { Dispatch, ReactNode, SetStateAction } from "react";
+import { Dispatch, PropsWithChildren, ReactNode, SetStateAction } from "react";
+import { NumberCoins } from "../types";
 import {
   Dialog,
   DialogContent,
@@ -9,21 +10,20 @@ import {
 } from "./ui/dialog";
 
 interface ResetDialogProps {
-  trigger: ReactNode;
   isOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
-  resetGame: () => void;
+  confirm: () => void;
 }
 
 function ResetDialog({
-  trigger,
   isOpen,
   setIsOpen,
-  resetGame,
-}: ResetDialogProps) {
+  confirm,
+  children,
+}: PropsWithChildren<ResetDialogProps>) {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      {trigger}
+      {children}
       <DialogContent className="w-[25em]">
         <DialogHeader>
           <DialogTitle className="text-center">
@@ -44,7 +44,7 @@ function ResetDialog({
             <button
               className="px-4 py-2 rounded-full bg-red-600 text-white"
               onClick={() => {
-                resetGame();
+                confirm();
                 setIsOpen(false);
               }}
             >

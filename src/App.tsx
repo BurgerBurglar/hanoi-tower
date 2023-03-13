@@ -1,30 +1,35 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Coin from "./components/Coin";
 import GameOverDialog from "./components/GameOverDialog";
 import ResetDialog from "./components/ResetDialog";
-
-type StackNumber = 1 | 2 | 3;
-type NumberCoins = 3 | 4 | 5 | 6 | 7;
-type CoinStacks = Map<StackNumber, Set<number>>;
+import { CoinStacks, NumberCoins, StackNumber } from "./types";
 
 const MIN_NUM_COINS = 3;
 const MAX_NUM_COINS = 7;
 
-function App() {
-  const [totalCoins, setTotalCoins] = useState<NumberCoins>(3);
-  const minSteps = 2 ** totalCoins - 1;
-  const coins = Array.from({ length: totalCoins }, (_, i) => i + 1);
-  const initialCoinStacks: CoinStacks = new Map([
+function createInitialStacks(numberCoins: NumberCoins) {
+  const coins = Array.from({ length: numberCoins }, (_, i) => i + 1);
+  const coinStacks: CoinStacks = new Map([
     [1, new Set(coins)],
     [2, new Set()],
     [3, new Set()],
   ]);
+  return coinStacks;
+}
+
+function App() {
+  const [totalCoins, setTotalCoins] = useState<NumberCoins>(3);
+  const minSteps = 2 ** totalCoins - 1;
+
+  const coins = Array.from({ length: totalCoins }, (_, i) => i + 1);
+  const initialCoinStacks = createInitialStacks(totalCoins);
 
   const [steps, setSteps] = useState(0);
   const [activeStack, setActiveStack] = useState<StackNumber | 0>(0);
   const [coinStacks, setCoinStacks] = useState<CoinStacks>(initialCoinStacks);
 
   const [isResetModalOpen, setIsResetModalOpen] = useState(false);
+  const targetTotalCoinsRef = useRef(totalCoins);
 
   useEffect(() => {
     resetGame();
@@ -97,9 +102,23 @@ function App() {
     setIsResetModalOpen(true);
   }
 
-  function resetGame() {
-    setCoinStacks(initialCoinStacks);
+  function resetGame(targetCoins = totalCoins) {
+    setCoinStacks(createInitialStacks(targetCoins));
+    setTotalCoins(targetCoins);
     setSteps(0);
+  }
+
+  function changeNumberCoins(delta: -1 | 1) {
+    const targetCoins = totalCoins + delta;
+    if (targetCoins < MIN_NUM_COINS || targetCoins > MAX_NUM_COINS) {
+      return;
+    }
+    if (steps === 0 || isGameOver()) {
+      setTotalCoins(targetCoins as NumberCoins);
+      return;
+    }
+    targetTotalCoinsRef.current = targetCoins as NumberCoins;
+    setIsResetModalOpen(true);
   }
 
   return (
@@ -169,7 +188,7 @@ function App() {
             <button
               className="border border-pink-400 rounded-full h-[2rem] grid aspect-square place-items-center disabled:border-slate-400 text-pink-400 disabled:text-slate-400"
               disabled={totalCoins === MIN_NUM_COINS}
-              onClick={() => setTotalCoins((prev) => (prev - 1) as NumberCoins)}
+              onClick={() => changeNumberCoins(-1)}
             >
               -
             </button>
@@ -177,34 +196,31 @@ function App() {
             <button
               className="border border-pink-400 rounded-full h-[2rem] grid aspect-square place-items-center disabled:border-slate-400 text-pink-400 disabled:text-slate-400"
               disabled={totalCoins === MAX_NUM_COINS}
-              onClick={() => setTotalCoins((prev) => (prev + 1) as NumberCoins)}
+              onClick={() => changeNumberCoins(1)}
             >
               +
             </button>
           </div>
         </div>
         <ResetDialog
-          trigger={
-            <button
-              className="px-4 py-1 text-lg border border-pink-600 rounded-full text-pink-600"
-              onClick={handleResetModal}
-            >
-              重置
-            </button>
-          }
           isOpen={isResetModalOpen}
           setIsOpen={setIsResetModalOpen}
-          resetGame={resetGame}
-        />
+          confirm={() => resetGame(targetTotalCoinsRef.current)}
+        >
+          <button
+            className="px-4 py-1 text-lg border border-pink-600 rounded-full text-pink-600"
+            onClick={handleResetModal}
+          >
+            重置
+          </button>
+        </ResetDialog>
       </div>
       {isGameOver() && (
-        <>
-          <GameOverDialog
-            totalCoins={totalCoins}
-            steps={steps}
-            score={getScore()}
-          />
-        </>
+        <GameOverDialog
+          totalCoins={totalCoins}
+          steps={steps}
+          score={getScore()}
+        />
       )}
     </div>
   );
