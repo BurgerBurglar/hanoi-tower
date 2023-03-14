@@ -67,22 +67,22 @@ function GameOverDialog({ totalCoins, steps, score }: GameOverDialogProps) {
           <DialogTitle className="text-center text-2xl text-pink-600">
             你赢啦！
           </DialogTitle>
-          <DialogDescription className="text-center text-lg">
-            <span className="block">
+          <div className="text-center text-lg">
+            <div>
               在
               <span className="text-pink-600 text-2xl font-bold mx-1">
                 {totalCoins}
               </span>
               个硬币的河内塔游戏中，
-              <span className="block">
+              <p>
                 你总共使用了
                 <span className="text-pink-600 text-2xl font-bold mx-1">
                   {steps}
                 </span>
                 步。
-              </span>
-            </span>
-            <span className="flex items-center justify-center gap-3">
+              </p>
+            </div>
+            <div className="flex items-center justify-center gap-3 mt-4">
               <span className="relative left-3">你的得分是：</span>
               <span
                 className={clsx(
@@ -100,8 +100,8 @@ function GameOverDialog({ totalCoins, steps, score }: GameOverDialogProps) {
               >
                 {feedback}
               </span>
-            </span>
-          </DialogDescription>
+            </div>
+          </div>
         </DialogHeader>
       </DialogContent>
     </Dialog>
