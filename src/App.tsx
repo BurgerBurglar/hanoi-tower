@@ -246,7 +246,7 @@ function App() {
         </div>
         <div className="flex flex-col items-center gap-4">
           <div className="flex flex-col gap-2 w-[12rem] justify-between items-center mt-6">
-            <div>硬币数量</div>
+            <div>砖块数量</div>
             <div className="flex gap-4 items-center">
               <button
                 className="rounded-full text-3xl text-pink-700
