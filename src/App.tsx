@@ -165,7 +165,8 @@ function App() {
         <div className="flex justify-around mt-10 mx-auto">
           <button
             disabled={isDisabled(1)}
-            className="hover:bg-slate-50 active:bg-slate-100 flex flex-col items-center justify-end h-[180px] relative w-[100px]"
+            className="flex flex-col items-center justify-end h-[180px] relative w-[100px]
+            enabled:hover:bg-orange-50 enabled:active:bg-orange-100"
             onClick={() => handleClick(1)}
             aria-label={clsx(
               "stack-1",
@@ -190,7 +191,7 @@ function App() {
           <button
             disabled={isDisabled(2)}
             className="flex flex-col items-center justify-end h-[180px] relative w-[100px]
-            enabled:hover:bg-slate-50 enabled:active:bg-slate-100"
+            enabled:hover:bg-orange-50 enabled:active:bg-orange-100"
             onClick={() => handleClick(2)}
             aria-label={clsx(
               "stack-1",
@@ -215,7 +216,7 @@ function App() {
           <button
             disabled={isDisabled(3)}
             className="flex flex-col items-center justify-end h-[180px] relative w-[100px]
-            enabled:hover:bg-slate-50 enabled:active:bg-slate-100"
+            enabled:hover:bg-orange-50 enabled:active:bg-orange-100"
             onClick={() => handleClick(3)}
             aria-label={clsx(
               "stack-1",
