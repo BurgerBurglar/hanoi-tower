@@ -150,107 +150,118 @@ function App() {
   }
 
   return (
-    <div className="max-w-[50rem] mx-auto px-4 py-2">
-      <h1 className="flex items-end justify-center text-3xl my-6">
-        <img src="/favicon.ico" alt="icon" className="h-[1.5em]" />
-        河内塔
-        <img src="/favicon.ico" alt="icon" className="h-[1.5em]" />
-      </h1>
-      <div className="flex gap-2 max-w-[4em] mx-auto justify-between">
-        <div className="">步数</div>
-        <div className="">{steps}</div>
-      </div>
-      <div className="flex justify-around mt-10 mx-auto">
-        <button
-          disabled={isDisabled(1)}
-          className="hover:bg-slate-50 active:bg-slate-100 flex flex-col items-center justify-end h-[180px] relative w-[100px]"
-          onClick={() => handleClick(1)}
-        >
-          <div className="w-[3px] h-full absolute left-[50%] -translate-x-[50%] bg-slate-900" />
-          {coins.map(
-            (coin) =>
-              isCoinInStack(coin, 1) && (
-                <Coin
-                  key={coin}
-                  number={coin}
-                  totalCoins={totalCoins}
-                  isTop={isCoinTop(coin, 1)}
-                />
-              )
-          )}
-        </button>
-        <button
-          disabled={isDisabled(2)}
-          className="flex flex-col items-center justify-end h-[180px] relative w-[100px]
-          enabled:hover:bg-slate-50 enabled:active:bg-slate-100"
-          onClick={() => handleClick(2)}
-        >
-          <div className="w-[3px] h-full absolute left-[50%] -translate-x-[50%] bg-slate-900" />
-          {coins.map(
-            (coin) =>
-              isCoinInStack(coin, 2) && (
-                <Coin
-                  key={coin}
-                  number={coin}
-                  totalCoins={totalCoins}
-                  isTop={isCoinTop(coin, 2)}
-                />
-              )
-          )}
-        </button>
-        <button
-          disabled={isDisabled(3)}
-          className="flex flex-col items-center justify-end h-[180px] relative w-[100px]
-          enabled:hover:bg-slate-50 enabled:active:bg-slate-100"
-          onClick={() => handleClick(3)}
-        >
-          <div className="w-[3px] h-full absolute left-[50%] -translate-x-[50%] bg-slate-900" />
-          {coins.map(
-            (coin) =>
-              isCoinInStack(coin, 3) && (
-                <Coin
-                  key={coin}
-                  number={coin}
-                  totalCoins={totalCoins}
-                  isTop={isCoinTop(coin, 3)}
-                />
-              )
-          )}
-        </button>
-      </div>
-      <div className="flex flex-col items-center gap-4">
-        <div className="flex flex-col gap-2 w-[12rem] justify-between items-center mt-6">
-          <div>硬币数量</div>
-          <div className="flex gap-2 items-center">
-            <button
-              className="border border-pink-400 rounded-full h-[2rem] grid aspect-square place-items-center disabled:border-slate-400 text-pink-400 disabled:text-slate-400"
-              disabled={totalCoins === MIN_NUM_COINS}
-              onClick={() => changeNumberCoins(-1)}
-            >
-              -
-            </button>
-            <div className="">{totalCoins}</div>
-            <button
-              className="border border-pink-400 rounded-full h-[2rem] grid aspect-square place-items-center disabled:border-slate-400 text-pink-400 disabled:text-slate-400"
-              disabled={totalCoins === MAX_NUM_COINS}
-              onClick={() => changeNumberCoins(1)}
-            >
-              +
-            </button>
-          </div>
+    <div className="max-w-[50rem] mx-auto px-4 py-2 flex flex-col justify-between h-full">
+      <div>
+        <h1 className="flex items-end justify-center text-3xl my-6">
+          <img src="/favicon.ico" alt="icon" className="h-[1.5em]" />
+          河内塔
+          <img src="/favicon.ico" alt="icon" className="h-[1.5em]" />
+        </h1>
+        <div className="flex gap-2 max-w-[4em] mx-auto justify-between">
+          <div className="">步数</div>
+          <div className="">{steps}</div>
         </div>
-        <ResetDialog
-          isOpen={isResetModalOpen}
-          setIsOpen={setIsResetModalOpen}
-          confirm={() => resetGame(targetTotalCoinsRef.current)}
-        >
+        <div className="flex justify-around mt-10 mx-auto">
           <button
-            className="px-4 py-1 text-lg border border-pink-600 rounded-full text-pink-600"
-            onClick={handleResetModal}
+            disabled={isDisabled(1)}
+            className="hover:bg-slate-50 active:bg-slate-100 flex flex-col items-center justify-end h-[180px] relative w-[100px]"
+            onClick={() => handleClick(1)}
           >
-            重置
+            <div className="w-[3px] h-full absolute left-[50%] -translate-x-[50%] bg-slate-900" />
+            {coins.map(
+              (coin) =>
+                isCoinInStack(coin, 1) && (
+                  <Coin
+                    key={coin}
+                    number={coin}
+                    totalCoins={totalCoins}
+                    isTop={isCoinTop(coin, 1)}
+                  />
+                )
+            )}
           </button>
-        </ResetDialog>
+          <button
+            disabled={isDisabled(2)}
+            className="flex flex-col items-center justify-end h-[180px] relative w-[100px]
+            enabled:hover:bg-slate-50 enabled:active:bg-slate-100"
+            onClick={() => handleClick(2)}
+          >
+            <div className="w-[3px] h-full absolute left-[50%] -translate-x-[50%] bg-slate-900" />
+            {coins.map(
+              (coin) =>
+                isCoinInStack(coin, 2) && (
+                  <Coin
+                    key={coin}
+                    number={coin}
+                    totalCoins={totalCoins}
+                    isTop={isCoinTop(coin, 2)}
+                  />
+                )
+            )}
+          </button>
+          <button
+            disabled={isDisabled(3)}
+            className="flex flex-col items-center justify-end h-[180px] relative w-[100px]
+            enabled:hover:bg-slate-50 enabled:active:bg-slate-100"
+            onClick={() => handleClick(3)}
+          >
+            <div className="w-[3px] h-full absolute left-[50%] -translate-x-[50%] bg-slate-900" />
+            {coins.map(
+              (coin) =>
+                isCoinInStack(coin, 3) && (
+                  <Coin
+                    key={coin}
+                    number={coin}
+                    totalCoins={totalCoins}
+                    isTop={isCoinTop(coin, 3)}
+                  />
+                )
+            )}
+          </button>
+        </div>
+        <div className="flex flex-col items-center gap-4">
+          <div className="flex flex-col gap-2 w-[12rem] justify-between items-center mt-6">
+            <div>硬币数量</div>
+            <div className="flex gap-2 items-center">
+              <button
+                className="border border-pink-400 rounded-full h-[2rem] grid aspect-square place-items-center disabled:border-slate-400 text-pink-400 disabled:text-slate-400"
+                disabled={totalCoins === MIN_NUM_COINS}
+                onClick={() => changeNumberCoins(-1)}
+              >
+                -
+              </button>
+              <div className="">{totalCoins}</div>
+              <button
+                className="border border-pink-400 rounded-full h-[2rem] grid aspect-square place-items-center disabled:border-slate-400 text-pink-400 disabled:text-slate-400"
+                disabled={totalCoins === MAX_NUM_COINS}
+                onClick={() => changeNumberCoins(1)}
+              >
+                +
+              </button>
+            </div>
+          </div>
+          <ResetDialog
+            isOpen={isResetModalOpen}
+            setIsOpen={setIsResetModalOpen}
+            confirm={() => resetGame(targetTotalCoinsRef.current)}
+          >
+            <button
+              className="px-4 py-1 text-lg border border-pink-600 rounded-full text-pink-600"
+              onClick={handleResetModal}
+            >
+              重置
+            </button>
+          </ResetDialog>
+        </div>
+      </div>
+      <div className="text-center mb-4">
+        <ol>
+          <li>一次只能移动一个砖块</li>
+          <li>砖块只能放在最顶端</li>
+          <li>大砖块不能放在小砖块上</li>
+          <li>把砖块平移到任意一个杆子就算完成</li>
+          <li>看看你能在多少步之内完成目标</li>
+        </ol>
       </div>
       {isGameOver() && (
         <GameOverDialog
