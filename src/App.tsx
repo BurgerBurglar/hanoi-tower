@@ -7,6 +7,7 @@ import ResetDialog from "./components/ResetDialog";
 import useWindowSize from "./hooks/useWindowSize";
 import { CoinStacks, NumberCoins, StackNumber } from "./types";
 import { createCoinAudio } from "./utils/audio";
+import { BiMinusCircle, BiPlusCircle } from "react-icons/bi";
 
 const MIN_NUM_COINS = 3;
 const MAX_NUM_COINS = 7;
@@ -248,23 +249,25 @@ function App() {
             <div>硬币数量</div>
             <div className="flex gap-4 items-center">
               <button
-                className="border border-pink-700 rounded-full h-[2rem] w-[2rem] grid place-items-center text-pink-700
-                disabled:text-slate-500 disabled:border-slate-500 "
+                className="rounded-full text-3xl text-pink-700
+                enabled:hover:bg-pink-50 enabled:active:bg-pink-100 disabled:text-slate-500"
                 disabled={totalCoins === MIN_NUM_COINS}
                 onClick={() => changeNumberCoins(-1)}
+                aria-label="remove brick"
               >
-                -
+                <BiMinusCircle />
               </button>
               <div className="text-pink-700 text-4xl relative -top-1">
                 {totalCoins}
               </div>
               <button
-                className="border border-pink-700 rounded-full h-[2rem] w-[2rem] grid place-items-center text-pink-700
-                disabled:text-slate-500 disabled:border-slate-500 "
+                className="rounded-full text-3xl text-pink-700
+                enabled:hover:bg-pink-50 enabled:active:bg-pink-100 disabled:text-slate-500"
                 disabled={totalCoins === MAX_NUM_COINS}
                 onClick={() => changeNumberCoins(1)}
+                aria-label="add brick"
               >
-                +
+                <BiPlusCircle />
               </button>
             </div>
           </div>
