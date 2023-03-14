@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import { useEffect, useRef, useState } from "react";
 import Coin from "./components/Coin";
 import GameOverDialog from "./components/GameOverDialog";
@@ -166,6 +167,12 @@ function App() {
             disabled={isDisabled(1)}
             className="hover:bg-slate-50 active:bg-slate-100 flex flex-col items-center justify-end h-[180px] relative w-[100px]"
             onClick={() => handleClick(1)}
+            aria-label={clsx(
+              "stack-1",
+              { "active stack": activeStack == 1 },
+              "coins: ",
+              coinStacks.get(1)
+            )}
           >
             <div className="w-[3px] h-full absolute left-[50%] -translate-x-[50%] bg-slate-900" />
             {coins.map(
@@ -185,6 +192,12 @@ function App() {
             className="flex flex-col items-center justify-end h-[180px] relative w-[100px]
             enabled:hover:bg-slate-50 enabled:active:bg-slate-100"
             onClick={() => handleClick(2)}
+            aria-label={clsx(
+              "stack-1",
+              { "active stack": activeStack == 2 },
+              "coins: ",
+              coinStacks.get(2)
+            )}
           >
             <div className="w-[3px] h-full absolute left-[50%] -translate-x-[50%] bg-slate-900" />
             {coins.map(
@@ -204,6 +217,12 @@ function App() {
             className="flex flex-col items-center justify-end h-[180px] relative w-[100px]
             enabled:hover:bg-slate-50 enabled:active:bg-slate-100"
             onClick={() => handleClick(3)}
+            aria-label={clsx(
+              "stack-1",
+              { "active stack": activeStack == 3 },
+              "coins: ",
+              coinStacks.get(3)
+            )}
           >
             <div className="w-[3px] h-full absolute left-[50%] -translate-x-[50%] bg-slate-900" />
             {coins.map(
