@@ -1,5 +1,4 @@
-import { Dispatch, PropsWithChildren, ReactNode, SetStateAction } from "react";
-import { NumberCoins } from "../types";
+import { Dispatch, PropsWithChildren, SetStateAction } from "react";
 import {
   Dialog,
   DialogContent,
@@ -33,25 +32,23 @@ function ResetDialog({
             本局游戏进度将无法回复。
           </DialogDescription>
         </DialogHeader>
-        <DialogFooter>
-          <div className="flex gap-4 justify-center">
-            <button
-              className="border border-green-600 px-4 py-2 rounded-full text-green-600"
-              onClick={() => setIsOpen(false)}
-            >
-              再玩一会
-            </button>
-            <button
-              className="px-4 py-2 rounded-full bg-red-600 text-white"
-              onClick={() => {
-                confirm();
-                setIsOpen(false);
-              }}
-            >
-              重置本局
-            </button>
-          </div>
-        </DialogFooter>
+        <div className="flex gap-4 justify-center">
+          <button
+            className="border border-green-600 px-4 py-2 rounded-full text-green-600"
+            onClick={() => setIsOpen(false)}
+          >
+            再玩一会
+          </button>
+          <button
+            className="px-4 py-2 rounded-full bg-red-600 text-white"
+            onClick={() => {
+              confirm();
+              setIsOpen(false);
+            }}
+          >
+            重置本局
+          </button>
+        </div>
       </DialogContent>
     </Dialog>
   );
