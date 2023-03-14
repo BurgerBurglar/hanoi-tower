@@ -222,17 +222,21 @@ function App() {
         <div className="flex flex-col items-center gap-4">
           <div className="flex flex-col gap-2 w-[12rem] justify-between items-center mt-6">
             <div>硬币数量</div>
-            <div className="flex gap-2 items-center">
+            <div className="flex gap-4 items-center">
               <button
-                className="border border-pink-400 rounded-full h-[2rem] grid aspect-square place-items-center disabled:border-slate-400 text-pink-400 disabled:text-slate-400"
+                className="border border-pink-700 rounded-full h-[2rem] grid aspect-square place-items-center text-pink-700
+                disabled:text-slate-500 disabled:border-slate-500 "
                 disabled={totalCoins === MIN_NUM_COINS}
                 onClick={() => changeNumberCoins(-1)}
               >
                 -
               </button>
-              <div className="">{totalCoins}</div>
+              <div className="text-pink-700 text-4xl relative -top-1">
+                {totalCoins}
+              </div>
               <button
-                className="border border-pink-400 rounded-full h-[2rem] grid aspect-square place-items-center disabled:border-slate-400 text-pink-400 disabled:text-slate-400"
+                className="border border-pink-700 rounded-full h-[2rem] grid aspect-square place-items-center text-pink-700
+                disabled:text-slate-500 disabled:border-slate-500 "
                 disabled={totalCoins === MAX_NUM_COINS}
                 onClick={() => changeNumberCoins(1)}
               >
@@ -246,7 +250,7 @@ function App() {
             confirm={() => resetGame(targetTotalCoinsRef.current)}
           >
             <button
-              className="px-4 py-1 text-lg border border-pink-600 rounded-full text-pink-600"
+              className="px-4 py-1 text-lg border border-pink-700 rounded-full text-pink-700"
               onClick={handleResetModal}
             >
               重置
@@ -254,7 +258,7 @@ function App() {
           </ResetDialog>
         </div>
       </div>
-      <div className="text-center mb-4">
+      <div className="text-center mb-4 text-slate-600">
         <ol>
           <li>一次只能移动一个砖块</li>
           <li>砖块只能放在最顶端</li>

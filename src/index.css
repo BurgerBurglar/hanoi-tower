@@ -5,5 +5,5 @@
 html,
 body,
 #root {
-  @apply h-full min-h-screen;
+  @apply h-full min-h-screen bg-yellow-50;
 }
