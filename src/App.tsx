@@ -248,7 +248,7 @@ function App() {
             <div>硬币数量</div>
             <div className="flex gap-4 items-center">
               <button
-                className="border border-pink-700 rounded-full h-[2rem] grid aspect-square place-items-center text-pink-700
+                className="border border-pink-700 rounded-full h-[2rem] w-[2rem] grid place-items-center text-pink-700
                 disabled:text-slate-500 disabled:border-slate-500 "
                 disabled={totalCoins === MIN_NUM_COINS}
                 onClick={() => changeNumberCoins(-1)}
@@ -259,7 +259,7 @@ function App() {
                 {totalCoins}
               </div>
               <button
-                className="border border-pink-700 rounded-full h-[2rem] grid aspect-square place-items-center text-pink-700
+                className="border border-pink-700 rounded-full h-[2rem] w-[2rem] grid place-items-center text-pink-700
                 disabled:text-slate-500 disabled:border-slate-500 "
                 disabled={totalCoins === MAX_NUM_COINS}
                 onClick={() => changeNumberCoins(1)}
