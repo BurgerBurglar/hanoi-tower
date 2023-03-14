@@ -165,8 +165,8 @@ function App() {
         <div className="flex justify-around mt-10 mx-auto">
           <button
             disabled={isDisabled(1)}
-            className="flex flex-col items-center justify-end h-[180px] relative w-[100px]
-            enabled:hover:bg-orange-50 enabled:active:bg-orange-100"
+            className="flex flex-col items-center justify-end h-[180px] relative w-[100px] border-b-2 border-black
+            enabled:active:bg-orange-50"
             onClick={() => handleClick(1)}
             aria-label={clsx(
               "stack-1",
@@ -190,8 +190,8 @@ function App() {
           </button>
           <button
             disabled={isDisabled(2)}
-            className="flex flex-col items-center justify-end h-[180px] relative w-[100px]
-            enabled:hover:bg-orange-50 enabled:active:bg-orange-100"
+            className="flex flex-col items-center justify-end h-[180px] relative w-[100px] border-b-2 border-black
+            enabled:active:bg-orange-50"
             onClick={() => handleClick(2)}
             aria-label={clsx(
               "stack-1",
@@ -215,8 +215,8 @@ function App() {
           </button>
           <button
             disabled={isDisabled(3)}
-            className="flex flex-col items-center justify-end h-[180px] relative w-[100px]
-            enabled:hover:bg-orange-50 enabled:active:bg-orange-100"
+            className="flex flex-col items-center justify-end h-[180px] relative w-[100px] border-b-2 border-black
+            enabled:active:bg-orange-50"
             onClick={() => handleClick(3)}
             aria-label={clsx(
               "stack-1",
@@ -270,10 +270,14 @@ function App() {
             confirm={() => resetGame(targetTotalCoinsRef.current)}
           >
             <button
-              className="px-4 py-1 text-lg border border-pink-700 rounded-full text-pink-700"
+              className={clsx(
+                "px-4 py-1 text-lg border rounded-full",
+                { "border-pink-700 text-pink-700": !isGameOver() },
+                { "bg-pink-700 text-white": isGameOver() }
+              )}
               onClick={handleResetModal}
             >
-              重置
+              {isGameOver() ? "再来一局" : "重置"}
             </button>
           </ResetDialog>
         </div>
