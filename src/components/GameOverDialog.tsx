@@ -1,11 +1,7 @@
 import clsx from "clsx";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "./ui/dialog";
+import { useEffect } from "react";
+import { createSuccessAudio } from "../utils/audio";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "./ui/dialog";
 
 interface GameOverDialogProps {
   totalCoins: number;
@@ -59,6 +55,10 @@ const getScoreInfo = (score: number) => {
 
 function GameOverDialog({ totalCoins, steps, score }: GameOverDialogProps) {
   const { textColor, bgColor, feedback } = getScoreInfo(score);
+  const success = createSuccessAudio();
+  useEffect(() => {
+    success.mediaElement.play();
+  }, []);
 
   return (
     <Dialog defaultOpen>
