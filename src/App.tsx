@@ -1,8 +1,10 @@
 import clsx from "clsx";
 import { useEffect, useRef, useState } from "react";
+import Confetti from "react-confetti";
 import Coin from "./components/Coin";
 import GameOverDialog from "./components/GameOverDialog";
 import ResetDialog from "./components/ResetDialog";
+import useWindowSize from "./hooks/useWindowSize";
 import { CoinStacks, NumberCoins, StackNumber } from "./types";
 import createAudio from "./utils/audio";
 
@@ -20,6 +22,8 @@ function createInitialStacks(numberCoins: NumberCoins) {
 }
 
 function App() {
+  const { width, height } = useWindowSize();
+
   const [totalCoins, setTotalCoins] = useState<NumberCoins>(3);
   const minSteps = 2 ** totalCoins - 1;
 
@@ -292,11 +296,14 @@ function App() {
         </ol>
       </div>
       {isGameOver() && (
-        <GameOverDialog
-          totalCoins={totalCoins}
-          steps={steps}
-          score={getScore()}
-        />
+        <>
+          <GameOverDialog
+            totalCoins={totalCoins}
+            steps={steps}
+            score={getScore()}
+          />
+          <Confetti className="z-[60]" width={width} height={height} />
+        </>
       )}
     </div>
   );
