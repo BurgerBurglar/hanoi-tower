@@ -254,8 +254,24 @@ function App() {
         <div className="">步数</div>
         <div className="">{steps}</div>
       </div>
-      <div className="flex flex-col items-center gap-4">
-        <div className="flex flex-col gap-2 w-[12rem] justify-between items-center mt-6">
+      <div className="flex flex-col items-center gap-4 mt-5">
+        <ResetDialog
+          isOpen={isResetModalOpen}
+          setIsOpen={setIsResetModalOpen}
+          confirm={() => resetGame(targetTotalCoinsRef.current)}
+        >
+          <button
+            className={clsx(
+              "px-4 py-1 text-lg border rounded-full",
+              { "border-pink-700 text-pink-700": !isGameOver() },
+              { "bg-pink-700 text-white": isGameOver() }
+            )}
+            onClick={handleResetModal}
+          >
+            {isGameOver() ? "再来一局" : "重置"}
+          </button>
+        </ResetDialog>
+        <div className="flex flex-col gap-2 w-[12rem] justify-between items-center">
           <div>砖块数量</div>
           <div className="flex gap-4 items-center">
             <button
@@ -281,22 +297,6 @@ function App() {
             </button>
           </div>
         </div>
-        <ResetDialog
-          isOpen={isResetModalOpen}
-          setIsOpen={setIsResetModalOpen}
-          confirm={() => resetGame(targetTotalCoinsRef.current)}
-        >
-          <button
-            className={clsx(
-              "px-4 py-1 text-lg border rounded-full",
-              { "border-pink-700 text-pink-700": !isGameOver() },
-              { "bg-pink-700 text-white": isGameOver() }
-            )}
-            onClick={handleResetModal}
-          >
-            {isGameOver() ? "再来一局" : "重置"}
-          </button>
-        </ResetDialog>
       </div>
 
       {isGameOver() && (
