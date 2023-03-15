@@ -162,9 +162,11 @@ function App() {
         河内塔
         <img src="/favicon.ico" alt="icon" className="h-[1.5em]" />
       </h1>
-      <div className="text-center mb-4 text-slate-600">
+      <div className="text-center mb-4 text-slate-600 text-sm">
         <ol>
           <li>把砖块平移到任意一个杆子就算完成</li>
+          <li>点击杆子可以升起或下降砖块</li>
+          <li>砖块升起时，点击另外一个杆子可以移动砖块</li>
           <li>一次只能移动一个砖块</li>
           <li>砖块只能放在最顶端</li>
           <li>大砖块不能放在小砖块上</li>
