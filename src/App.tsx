@@ -156,148 +156,147 @@ function App() {
   }
 
   return (
-    <div className="max-w-[50rem] mx-auto px-4 py-2 flex flex-col justify-between h-full">
-      <div>
-        <h1 className="flex items-end justify-center text-3xl my-6">
-          <img src="/favicon.ico" alt="icon" className="h-[1.5em]" />
-          河内塔
-          <img src="/favicon.ico" alt="icon" className="h-[1.5em]" />
-        </h1>
-        <div className="flex gap-2 max-w-[4em] mx-auto justify-between">
-          <div className="">步数</div>
-          <div className="">{steps}</div>
-        </div>
-        <div className="flex justify-around mt-10 mx-auto">
-          <button
-            disabled={isDisabled(1)}
-            className="flex flex-col items-center justify-end h-[180px] relative w-[100px] border-b-2 border-black
-            enabled:active:bg-orange-50"
-            onClick={() => handleClick(1)}
-            aria-label={clsx(
-              "stack-1",
-              { "active stack": activeStack == 1 },
-              "coins: ",
-              coinStacks.get(1)
-            )}
-          >
-            <div className="w-[3px] h-full absolute left-[50%] -translate-x-[50%] bg-slate-900" />
-            {coins.map(
-              (coin) =>
-                isCoinInStack(coin, 1) && (
-                  <Coin
-                    key={coin}
-                    number={coin}
-                    totalCoins={totalCoins}
-                    isTop={isCoinTop(coin, 1)}
-                  />
-                )
-            )}
-          </button>
-          <button
-            disabled={isDisabled(2)}
-            className="flex flex-col items-center justify-end h-[180px] relative w-[100px] border-b-2 border-black
-            enabled:active:bg-orange-50"
-            onClick={() => handleClick(2)}
-            aria-label={clsx(
-              "stack-1",
-              { "active stack": activeStack == 2 },
-              "coins: ",
-              coinStacks.get(2)
-            )}
-          >
-            <div className="w-[3px] h-full absolute left-[50%] -translate-x-[50%] bg-slate-900" />
-            {coins.map(
-              (coin) =>
-                isCoinInStack(coin, 2) && (
-                  <Coin
-                    key={coin}
-                    number={coin}
-                    totalCoins={totalCoins}
-                    isTop={isCoinTop(coin, 2)}
-                  />
-                )
-            )}
-          </button>
-          <button
-            disabled={isDisabled(3)}
-            className="flex flex-col items-center justify-end h-[180px] relative w-[100px] border-b-2 border-black
-            enabled:active:bg-orange-50"
-            onClick={() => handleClick(3)}
-            aria-label={clsx(
-              "stack-1",
-              { "active stack": activeStack == 3 },
-              "coins: ",
-              coinStacks.get(3)
-            )}
-          >
-            <div className="w-[3px] h-full absolute left-[50%] -translate-x-[50%] bg-slate-900" />
-            {coins.map(
-              (coin) =>
-                isCoinInStack(coin, 3) && (
-                  <Coin
-                    key={coin}
-                    number={coin}
-                    totalCoins={totalCoins}
-                    isTop={isCoinTop(coin, 3)}
-                  />
-                )
-            )}
-          </button>
-        </div>
-        <div className="flex flex-col items-center gap-4">
-          <div className="flex flex-col gap-2 w-[12rem] justify-between items-center mt-6">
-            <div>砖块数量</div>
-            <div className="flex gap-4 items-center">
-              <button
-                className="rounded-full text-3xl text-pink-700
-                enabled:hover:bg-pink-50 enabled:active:bg-pink-100 disabled:text-slate-500"
-                disabled={totalCoins === MIN_NUM_COINS}
-                onClick={() => changeNumberCoins(-1)}
-                aria-label="remove brick"
-              >
-                <BiMinusCircle />
-              </button>
-              <div className="text-pink-700 text-4xl relative -top-1">
-                {totalCoins}
-              </div>
-              <button
-                className="rounded-full text-3xl text-pink-700
-                enabled:hover:bg-pink-50 enabled:active:bg-pink-100 disabled:text-slate-500"
-                disabled={totalCoins === MAX_NUM_COINS}
-                onClick={() => changeNumberCoins(1)}
-                aria-label="add brick"
-              >
-                <BiPlusCircle />
-              </button>
-            </div>
-          </div>
-          <ResetDialog
-            isOpen={isResetModalOpen}
-            setIsOpen={setIsResetModalOpen}
-            confirm={() => resetGame(targetTotalCoinsRef.current)}
-          >
-            <button
-              className={clsx(
-                "px-4 py-1 text-lg border rounded-full",
-                { "border-pink-700 text-pink-700": !isGameOver() },
-                { "bg-pink-700 text-white": isGameOver() }
-              )}
-              onClick={handleResetModal}
-            >
-              {isGameOver() ? "再来一局" : "重置"}
-            </button>
-          </ResetDialog>
-        </div>
-      </div>
+    <div className="max-w-[30rem] mx-auto px-4 py-2 flex flex-col h-full">
+      <h1 className="flex items-end justify-center text-3xl my-6">
+        <img src="/favicon.ico" alt="icon" className="h-[1.5em]" />
+        河内塔
+        <img src="/favicon.ico" alt="icon" className="h-[1.5em]" />
+      </h1>
       <div className="text-center mb-4 text-slate-600">
         <ol>
+          <li>把砖块平移到任意一个杆子就算完成</li>
           <li>一次只能移动一个砖块</li>
           <li>砖块只能放在最顶端</li>
           <li>大砖块不能放在小砖块上</li>
-          <li>把砖块平移到任意一个杆子就算完成</li>
           <li>看看你能在多少步之内完成目标</li>
         </ol>
       </div>
+      <div className="flex justify-between mt-2">
+        <button
+          disabled={isDisabled(1)}
+          className="flex flex-col items-center justify-end h-[180px] relative w-[100px] border-b-2 border-black
+            enabled:active:bg-orange-50"
+          onClick={() => handleClick(1)}
+          aria-label={clsx(
+            "stack-1",
+            { "active stack": activeStack == 1 },
+            "coins: ",
+            coinStacks.get(1)
+          )}
+        >
+          <div className="w-[3px] h-full absolute left-[50%] -translate-x-[50%] bg-slate-900" />
+          {coins.map(
+            (coin) =>
+              isCoinInStack(coin, 1) && (
+                <Coin
+                  key={coin}
+                  number={coin}
+                  totalCoins={totalCoins}
+                  isTop={isCoinTop(coin, 1)}
+                />
+              )
+          )}
+        </button>
+        <button
+          disabled={isDisabled(2)}
+          className="flex flex-col items-center justify-end h-[180px] relative w-[100px] border-b-2 border-black
+            enabled:active:bg-orange-50"
+          onClick={() => handleClick(2)}
+          aria-label={clsx(
+            "stack-1",
+            { "active stack": activeStack == 2 },
+            "coins: ",
+            coinStacks.get(2)
+          )}
+        >
+          <div className="w-[3px] h-full absolute left-[50%] -translate-x-[50%] bg-slate-900" />
+          {coins.map(
+            (coin) =>
+              isCoinInStack(coin, 2) && (
+                <Coin
+                  key={coin}
+                  number={coin}
+                  totalCoins={totalCoins}
+                  isTop={isCoinTop(coin, 2)}
+                />
+              )
+          )}
+        </button>
+        <button
+          disabled={isDisabled(3)}
+          className="flex flex-col items-center justify-end h-[180px] relative w-[100px] border-b-2 border-black
+            enabled:active:bg-orange-50"
+          onClick={() => handleClick(3)}
+          aria-label={clsx(
+            "stack-1",
+            { "active stack": activeStack == 3 },
+            "coins: ",
+            coinStacks.get(3)
+          )}
+        >
+          <div className="w-[3px] h-full absolute left-[50%] -translate-x-[50%] bg-slate-900" />
+          {coins.map(
+            (coin) =>
+              isCoinInStack(coin, 3) && (
+                <Coin
+                  key={coin}
+                  number={coin}
+                  totalCoins={totalCoins}
+                  isTop={isCoinTop(coin, 3)}
+                />
+              )
+          )}
+        </button>
+      </div>
+      <div className="flex gap-2 max-w-[4em] mx-auto mt-5 justify-between">
+        <div className="">步数</div>
+        <div className="">{steps}</div>
+      </div>
+      <div className="flex flex-col items-center gap-4">
+        <div className="flex flex-col gap-2 w-[12rem] justify-between items-center mt-6">
+          <div>砖块数量</div>
+          <div className="flex gap-4 items-center">
+            <button
+              className="rounded-full text-3xl text-pink-700
+                enabled:hover:bg-pink-50 enabled:active:bg-pink-100 disabled:text-slate-500"
+              disabled={totalCoins === MIN_NUM_COINS}
+              onClick={() => changeNumberCoins(-1)}
+              aria-label="remove brick"
+            >
+              <BiMinusCircle />
+            </button>
+            <div className="text-pink-700 text-4xl relative -top-1">
+              {totalCoins}
+            </div>
+            <button
+              className="rounded-full text-3xl text-pink-700
+                enabled:hover:bg-pink-50 enabled:active:bg-pink-100 disabled:text-slate-500"
+              disabled={totalCoins === MAX_NUM_COINS}
+              onClick={() => changeNumberCoins(1)}
+              aria-label="add brick"
+            >
+              <BiPlusCircle />
+            </button>
+          </div>
+        </div>
+        <ResetDialog
+          isOpen={isResetModalOpen}
+          setIsOpen={setIsResetModalOpen}
+          confirm={() => resetGame(targetTotalCoinsRef.current)}
+        >
+          <button
+            className={clsx(
+              "px-4 py-1 text-lg border rounded-full",
+              { "border-pink-700 text-pink-700": !isGameOver() },
+              { "bg-pink-700 text-white": isGameOver() }
+            )}
+            onClick={handleResetModal}
+          >
+            {isGameOver() ? "再来一局" : "重置"}
+          </button>
+        </ResetDialog>
+      </div>
+
       {isGameOver() && (
         <>
           <GameOverDialog
